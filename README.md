@@ -1,128 +1,49 @@
-# CareBot – Your AI Health Assistant 🤖❤️
+# CareBot
 
-**Live Site:** [care-bot-fk6o.vercel.app](https://care-bot-fk6o.vercel.app)
+**An AI health assistant that explains common symptoms in plain language and says when to see a doctor.** Built for people in Nigeria, where a clinic visit is not always easy and a fever could be many things.
 
-CareBot is an intelligent, conversational health assistant built to provide preliminary symptom guidance, health awareness, and access to curated medical knowledge. It leverages cutting-edge AI capabilities to offer a user-friendly experience for basic health assistance, symptom clarification, and condition awareness — especially in communities with limited access to professional healthcare.
+**Live app:** [care-bot-fk6o.vercel.app](https://care-bot-fk6o.vercel.app)
 
----
+![CareBot](docs/carebot.png)
 
-## 🌍 Vision & Purpose
+> CareBot gives general health information, not a diagnosis. In an emergency, call 112 or go to the nearest hospital.
 
-Access to reliable health information remains a challenge in many underserved regions. **CareBot** was created to:
+## How it keeps people safe
 
-* Help users better understand common symptoms and conditions.
-* Empower people to make informed decisions before reaching a doctor.
-* Serve as a virtual health assistant that promotes preventive care awareness.
+1. **Emergencies are caught by rules, before any AI runs.** Chest pain, trouble breathing, stroke signs, seizures, fainting, heavy bleeding, poisoning, a stiff neck with fever, and thoughts of self-harm get an immediate, fixed message to call 112 or go to an emergency department ([`lib/emergency.ts`](lib/emergency.ts)). This never depends on the model, an API key or a network call.
+2. **The model is told what it may not do.** It does not diagnose, does not give doses for prescription medicines or for children, encourages testing for malaria and typhoid before treatment, and says when to see a doctor ([`lib/prompt.ts`](lib/prompt.ts)).
+3. **It never just fails.** If the AI is unavailable or no key is set, CareBot answers from a small set of reviewed answers ([`lib/offline.ts`](lib/offline.ts)).
+4. **The key stays on the server.** The browser talks to `/api/chat`; only the server calls Gemini, with the key in a header.
+5. **Inputs are checked and limited.** Up to 12 messages of 1,000 characters each, no injected system messages, and a per-visitor hourly limit.
 
-> ⚠️ **Disclaimer:** CareBot is not a diagnostic or emergency tool. Always consult a licensed physician for medical advice or emergencies.
+![Emergency message](docs/emergency.png)
 
----
+## Tech
 
-## ✨ Features
+Next.js 16, React 19, TypeScript, Google Gemini (`gemini-2.5-flash` by default), Vitest. **25 tests** cover the emergency rules (including false alarms), the AI request, fallbacks, input checks and the rate limit.
 
-* 🤖 **Conversational Interface**: Chat with a friendly assistant that asks relevant questions (name, age, gender, symptoms).
-* 🔍 **Symptom Parsing**: Uses AI to interpret symptom descriptions.
-* 📚 **Health Knowledgebase**: Includes fallback answers for common conditions like malaria, typhoid, asthma, etc.
-* ⏳ **Usage Throttling**: Limits excessive use to prevent spam; supports per-hour usage tracking.
-* 💬 **Natural Language Interaction**: Designed to feel intuitive and human-like.
-* 🧠 **Powered by AI APIs**: Can integrate with tools like Infermedica, OpenAI, or DeepSeek (depending on available keys and usage).
-
----
-
-## 🔧 Tech Stack
-
-* **Frontend**: HTML, CSS, Vanilla JavaScript with React via Babel (no build tools)
-* **Backend (Optional APIs)**:
-
-  * [Infermedica API](https://developer.infermedica.com/) – for symptom parsing and health triage (free trial available)
-  * [DeepSeek](https://deepseek.com/) or [OpenAI](https://platform.openai.com/) – for language-based responses (paid)
-
----
-
-## 🚀 Getting Started
-
-### 1. Clone the Repository
+## Run it
 
 ```bash
 git clone https://github.com/SamOpera/CareBot.git
 cd CareBot
+npm install
+cp .env.example .env.local   # add GEMINI_API_KEY from Google AI Studio
+npm run dev
 ```
 
-### 2. Set Up the Environment
+Without a key it still runs, using the offline answers.
 
-You can run the app locally by opening `index.html` in a browser. No build tools needed.
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Start the dev server |
+| `npm test` | Run the tests |
+| `npm run build` | Production build |
 
-For more complex integrations (like APIs):
+## History
 
-* Set your API keys inside `app.js`:
-
-```js
-const API_KEY = "your_api_key_here";
-```
-
-### 3. Deploy
-
-Deploy easily on:
-
-* [Vercel](https://vercel.com/)
-* GitHub Pages
-* Netlify
-  Just drag and drop the `index.html` and scripts.
+`legacy-v1/` holds the first version (2025): a browser-only React app that matched questions against a fixed list.
 
 ---
 
-## 🧠 How It Works
-
-1. **Greets the user** and gathers:
-
-   * Name
-   * Age
-   * Gender
-   * Symptom description
-2. **Parses symptom input** using AI APIs or predefined logic.
-3. **Returns condition insights** or fallback messages based on known health issues.
-4. **Tracks usage** to avoid overuse, with a cooldown mechanism (e.g., 1-hour window).
-
----
-
-## 🛡️ Security & Privacy
-
-* No personal health data is stored.
-* Sessions are tracked using `localStorage` only.
-* You are responsible for managing your API keys securely.
-
----
-
-## 📦 Future Improvements
-
-* ✅ Multi-language support
-* ✅ Better symptom-to-condition matching
-* ⏳ Referral to real clinics or hospitals based on location
-* ⏳ Integration with WhatsApp or Telegram for field use
-* ⏳ Offline-first PWA capabilities for rural areas
-
----
-
-## 🤝 Contributing
-
-Want to help improve CareBot?
-
-1. Fork this repo
-2. Create a new branch (`git checkout -b feature-xyz`)
-3. Commit your changes (`git commit -am 'Add new feature'`)
-4. Push to the branch (`git push origin feature-xyz`)
-5. Create a Pull Request
-
----
-
-## 👨‍💻 Author
-
-Built with ❤️ by [SamOpera](https://github.com/SamOpera)
-Project for health innovation and digital humanitarianism.
-
----
-
-## 📜 License
-
-This project is open-source and available under the [MIT License](LICENSE).
-
+Built by [Samson Olakeye](https://samsonolakeye.com) · [GitHub](https://github.com/SamOpera) · [X](https://x.com/TheSamOpera)

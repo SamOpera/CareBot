@@ -1,0 +1,27 @@
+{
+  "name": "carebot",
+  "version": "2.0.0",
+  "private": true,
+  "description": "AI health assistant that explains common symptoms in plain language and says when to see a doctor.",
+  "license": "MIT",
+  "author": "Samson Olakeye (https://samsonolakeye.com)",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "next": "16.4.2",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "typescript": "~5.9.3",
+    "vitest": "^3.2.4"
+  }
+}
