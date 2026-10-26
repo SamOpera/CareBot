@@ -90,9 +90,9 @@ describe("askGemini", () => {
       { role: "assistant", content: "hello" },
       { role: "user", content: "I have a fever" },
     ]
-    expect(await askGemini(history, "secret-key", "gemini-2.5-flash", fetcher)).toBe("Hello")
+    expect(await askGemini(history, "secret-key", undefined, fetcher)).toBe("Hello")
     const { url, init } = calls[0]
-    expect(url).toContain("gemini-2.5-flash:generateContent")
+    expect(url).toContain("gemini-3.5-flash-lite:generateContent")
     expect(url).not.toContain("secret-key")
     expect((init?.headers as Record<string, string>)["x-goog-api-key"]).toBe("secret-key")
     const body = JSON.parse(String(init?.body))

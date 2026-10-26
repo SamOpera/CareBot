@@ -20,7 +20,7 @@
 
 ## Tech
 
-Next.js 16, React 19, TypeScript, Google Gemini (`gemini-2.5-flash` by default), Vitest. **25 tests** cover the emergency rules (including false alarms), the AI request, fallbacks, input checks and the rate limit.
+Next.js 16, React 19, TypeScript, Google Gemini (`gemini-3.5-flash-lite` by default, set `GEMINI_MODEL` to change it), Vitest. **25 tests** cover the emergency rules (including false alarms), the AI request, fallbacks, input checks and the rate limit.
 
 ## Run it
 

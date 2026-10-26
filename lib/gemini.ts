@@ -9,12 +9,15 @@ type Fetch = typeof fetch
 
 const API = "https://generativelanguage.googleapis.com/v1beta/models"
 
+/** Google's recommended low-cost model for new projects. Override with GEMINI_MODEL. */
+export const DEFAULT_MODEL = "gemini-3.5-flash-lite"
+
 export class GeminiError extends Error {}
 
 export async function askGemini(
   messages: ChatMessage[],
   apiKey: string,
-  model = "gemini-2.5-flash",
+  model = DEFAULT_MODEL,
   fetcher: Fetch = fetch
 ): Promise<string> {
   const response = await fetcher(`${API}/${encodeURIComponent(model)}:generateContent`, {
@@ -26,7 +29,7 @@ export async function askGemini(
         role: m.role === "assistant" ? "model" : "user",
         parts: [{ text: m.content }],
       })),
-      generationConfig: { temperature: 0.3, maxOutputTokens: 600 },
+      generationConfig: { temperature: 0.3, maxOutputTokens: 2048 },
     }),
     signal: AbortSignal.timeout(25_000),
   })
