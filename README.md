@@ -1,6 +1,6 @@
-# CareBot
+# CareBot by HELBRED Initiative
 
-**An AI health assistant that explains common symptoms in plain language and says when to see a doctor.** Built for people in Nigeria, where a clinic visit is not always easy and a fever could be many things.
+**An AI health assistant that explains common symptoms in plain language and says when to see a doctor.** Built for [HELBRED Initiative](https://helbredinitiative.org), a Nigerian non-profit working for SDG 3, good health and well-being, to extend its medical outreach to people who can't easily reach a clinic.
 
 **Live app:** [care-bot-fk6o.vercel.app](https://care-bot-fk6o.vercel.app)
 
@@ -46,4 +46,4 @@ Without a key it still runs, using the offline answers.
 
 ---
 
-Built by [Samson Olakeye](https://samsonolakeye.com) · [GitHub](https://github.com/SamOpera) · [X](https://x.com/TheSamOpera)
+A [HELBRED Initiative](https://helbredinitiative.org) project. Developed by [Samson Olakeye](https://samsonolakeye.com), Development Coordinator and Development Technology Associate at HELBRED · [GitHub](https://github.com/SamOpera) · [X](https://x.com/TheSamOpera)

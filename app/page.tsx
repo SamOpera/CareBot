@@ -6,10 +6,10 @@ export default function Home() {
     <main className="shell">
       <header className="top">
         <div className="brand">
-          <span className="brand__mark" aria-hidden="true">
-            +
-          </span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className="brand__mark" src="/helbred-emblem.png" width={52} height={52} alt="HELBRED Initiative" />
           <div>
+            <span className="brand__org">HELBRED Initiative</span>
             <h1>CareBot</h1>
             <p>Plain-language health guidance, and when to see a doctor</p>
           </div>
@@ -24,7 +24,8 @@ export default function Home() {
       <Chat />
 
       <footer className="foot">
-        Built by <a href="https://samsonolakeye.com">Samson Olakeye</a> ·{" "}
+        A <a href="https://helbredinitiative.org">HELBRED Initiative</a> project for SDG 3, good health and
+        well-being · Developed by <a href="https://samsonolakeye.com">Samson Olakeye</a> ·{" "}
         <a href="https://github.com/SamOpera/CareBot">Source code</a>
       </footer>
     </main>

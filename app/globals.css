@@ -1,11 +1,12 @@
 :root {
-  --bg: #f3f7f6;
+  /* HELBRED Initiative colours, from the tree emblem */
+  --bg: #faf6ef;
   --card: #ffffff;
-  --text: #102a28;
-  --muted: #557370;
-  --line: #d8e5e3;
-  --brand: #0f766e;
-  --brand-soft: #e2f3f1;
+  --text: #2b1d0e;
+  --muted: #76624b;
+  --line: #ecdfcb;
+  --brand: #8a4f0a;
+  --brand-soft: #f6ecdc;
   --danger: #b42318;
   --danger-soft: #fde8e6;
   font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -51,15 +52,19 @@ a {
 }
 
 .brand__mark {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: var(--brand);
-  color: #fff;
-  font-size: 1.6rem;
+  width: 52px;
+  height: 52px;
+  flex: none;
+}
+
+.brand__org {
+  display: block;
+  margin-bottom: 1px;
+  color: var(--brand);
+  font-size: 0.72rem;
   font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 .brand h1 {
