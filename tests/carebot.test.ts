@@ -120,6 +120,28 @@ describe("input checks", () => {
     expect(parseMessages(long)?.length).toBe(12)
   })
 
+  it("accepts CareBot's own long answers, so a long reply never blocks the next question", () => {
+    const history = [
+      { role: "user", content: "I have fever and body pain" },
+      { role: "assistant", content: "x".repeat(2500) },
+      { role: "user", content: "5 days" },
+    ]
+    expect(parseMessages(history)?.length).toBe(3)
+    const huge = parseMessages([{ role: "assistant", content: "y".repeat(9000) }, { role: "user", content: "ok" }])
+    expect(huge?.[0].content.length).toBe(6000)
+  })
+
+  it("joins messages sent in a row into one turn", () => {
+    const parsed = parseMessages([
+      { role: "user", content: "fever" },
+      { role: "assistant", content: "How long?" },
+      { role: "user", content: "5 Days" },
+      { role: "user", content: "5" },
+    ])
+    expect(parsed?.map((m) => m.role)).toEqual(["user", "assistant", "user"])
+    expect(parsed?.[2].content).toBe("5 Days\n5")
+  })
+
   it("rejects empty, oversized or malformed input", () => {
     expect(parseMessages([])).toBeNull()
     expect(parseMessages([{ role: "user", content: "" }])).toBeNull()

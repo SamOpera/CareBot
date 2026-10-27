@@ -11,17 +11,31 @@ export type Reply = {
 }
 
 export const MAX_MESSAGES = 12
+/** The limit on what a person types. */
 export const MAX_CHARS = 1000
+/** CareBot's own earlier answers can be longer; anything past this is trimmed, not refused. */
+export const MAX_ASSISTANT_CHARS = 6000
 
 export function parseMessages(input: unknown): ChatMessage[] | null {
   if (!Array.isArray(input) || input.length === 0) return null
   const messages = input.slice(-MAX_MESSAGES)
   for (const m of messages) {
     if (!m || (m.role !== "user" && m.role !== "assistant") || typeof m.content !== "string") return null
-    if (!m.content.trim() || m.content.length > MAX_CHARS) return null
+    if (!m.content.trim()) return null
+    if (m.role === "user" && m.content.length > MAX_CHARS) return null
   }
   if (messages[messages.length - 1].role !== "user") return null
-  return messages.map((m) => ({ role: m.role, content: m.content.trim() }))
+
+  // Messages sent in a row (for example after a network error) become one turn,
+  // so the conversation always alternates between the person and CareBot.
+  const turns: ChatMessage[] = []
+  for (const m of messages) {
+    const content = m.role === "assistant" ? m.content.trim().slice(0, MAX_ASSISTANT_CHARS) : m.content.trim()
+    const last = turns[turns.length - 1]
+    if (last && last.role === m.role) last.content += "\n" + content
+    else turns.push({ role: m.role, content })
+  }
+  return turns
 }
 
 export async function respond(
